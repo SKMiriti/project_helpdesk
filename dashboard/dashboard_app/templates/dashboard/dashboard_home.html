@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Welcome to Project Helpdesk Dashboard</h1>
+<p>Here you can monitor all tickets, communications, and billing activities.</p>
+<div>
+    <a href="{% url 'tickets:ticket_list' %}">View Tickets</a> |
+    <a href="{% url 'communication:home' %}">View Communications</a> |
+    <a href="{% url 'billing:billing_dashboard' %}">View Billing</a>
+</div>
+{% endblock %}

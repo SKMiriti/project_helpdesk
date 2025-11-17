@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpdesk Dashboard</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #f5f5f7;
+            --text: #222;
+            --card-bg: #fff;
+            --sidebar-bg: #111827;
+            --sidebar-text: #e5e7eb;
+            --primary: #6366f1;
+        }
+
+        body.dark {
+            --bg: #0f0f10;
+            --text: #f5f5f7;
+            --card-bg: #1a1a1d;
+            --sidebar-bg: #09090b;
+            --sidebar-text: #d1d5db;
+            --primary: #818cf8;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: 0.3s ease;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            height: 100vh;
+            position: fixed;
+            padding-top: 25px;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 35px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 15px 25px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.07);
+            padding-left: 35px;
+        }
+
+        /* Content */
+        .content {
+            margin-left: 250px;
+            padding: 25px;
+        }
+
+        .topbar {
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        /* Toggle */
+        .toggle {
+            cursor: pointer;
+            padding: 7px 14px;
+            background: var(--primary);
+            color: white;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        /* Cards */
+        .cards {
+            display: flex;
+            gap: 25px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: var(--card-bg);
+            width: 230px;
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .card p {
+            font-size: 30px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            animation: fadeIn 0.7s ease;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: white;
+        }
+        .open { background: #22c55e; }
+        .pending { background: #eab308; }
+        .closed { background: #ef4444; }
+
+        .high { background: #ef4444; }
+        .medium { background: #eab308; }
+        .low { background: #22c55e; }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h2>Helpdesk</h2>
+        <a href="#">Dashboard</a>
+        <a href="#">Tickets</a>
+        <a href="#">Agents</a>
+        <a href="#">Settings</a>
+        <a href="#">Logout</a>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <!-- TOP BAR -->
+        <div class="topbar">
+            <h2>Welcome Back 👋</h2>
+            <div class="toggle" onclick="toggleMode()">Toggle Theme</div>
+        </div>
+
+        <!-- CARDS -->
+        <div class="cards">
+            <div class="card">
+                <h3>Total Tickets</h3>
+                <p id="totalTickets">34</p>
+            </div>
+            <div class="card">
+                <h3>Open</h3>
+                <p id="openTickets">12</p>
+            </div>
+            <div class="card">
+                <h3>Pending</h3>
+                <p id="pendingTickets">7</p>
+            </div>
+            <div class="card">
+                <h3>Closed</h3>
+                <p id="closedTickets">15</p>
+            </div>
+        </div>
+
+        <!-- TICKET TABLE -->
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Created At</th>
+                <th>Assigned To</th>
+            </tr>
+
+            <tr>
+                <td>#1024</td>
+                <td>Login issue</td>
+                <td><span class="badge open">Open</span></td>
+                <td><span class="badge high">High</span></td>
+                <td>2025-02-12</td>
+                <td>Agent 2</td>
+            </tr>
+
+            <tr>
+                <td>#1025</td>
+                <td>Email not working</td>
+                <td><span class="badge pending">Pending</span></td>
+                <td><span class="badge medium">Medium</span></td>
+                <td>2025-02-11</td>
+                <td>Agent 4</td>
+            </tr>
+
+            <tr>
+                <td>#1026</td>
+                <td>Password reset</td>
+                <td><span class="badge closed">Closed</span></td>
+                <td><span class="badge low">Low</span></td>
+                <td>2025-02-10</td>
+                <td>Agent 1</td>
+            </tr>
+        </table>
+
+    </div>
+
+    <script>
+        function toggleMode() {
+            document.body.classList.toggle("dark");
+        }
+    </script>
+
+</body>
+</html>
