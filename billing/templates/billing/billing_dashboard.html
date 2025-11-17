@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Billing Dashboard</h2>
+<ul>
+  {% for invoice in invoices %}
+    <li>Invoice #{{ invoice.id }} - {{ invoice.amount }} - {% if invoice.paid %}Paid{% else %}Pending{% endif %}</li>
+  {% empty %}
+    <li>No invoices found.</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'billing:subscription_detail' %}">View Subscription Details</a>
+{% endblock %}
